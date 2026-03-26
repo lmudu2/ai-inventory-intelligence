@@ -1,6 +1,6 @@
 # Environments
 .env
-data/*.csv
+
 
 .venv
 env/
