@@ -1,0 +1,11 @@
+streamlit
+pandas
+plotly
+langgraph
+langchain-groq
+langchain-core
+groq
+python-dotenv
+requests
+numpy
+sendgrid
