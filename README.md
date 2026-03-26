@@ -9,6 +9,10 @@ This platform provides an end-to-end autonomous procurement suite, focusing on:
 - **Financial Intelligence**: Calculates "Inventory Optimization Impact" representing the financial risk of inaction (Stockout Risk vs. Holding Cost) and recommends optimized dynamic pricing.
 - **Autonomous Outreach**: Integrated with SendGrid to generate and dispatch formatted, professional RFQ (Request for Quotation) emails to top-tier suppliers automatically.
 
+## 🌐 Deployment Options
+- **Streamlit Cloud (Live)**: Deploy easily via Streamlit Community Cloud.
+- **Google Colab (Interactive Demo)**: Open the provided [AI_Inventory_Intelligence_Demo.ipynb](https://colab.research.google.com/github/lmudu2/ai-inventory-intelligence/blob/main/AI_Inventory_Intelligence_Demo.ipynb) directly in Google Colab to run the full dashboard & backend API in the cloud without installing anything locally.
+
 ## 🏗️ Architecture
 - **Frontend**: Streamlit-based AI-first dashboard featuring premium glassmorphism aesthetics, dynamic metric visualizers, and an intuitive dual-view workflow (Global Market vs. Product Focus).
 - **Core Orchestration**: LangGraph-driven state machines ensuring structured, sequential AI reasoning across data gathering, strategy formulation, and execution.
@@ -51,4 +55,3 @@ This platform provides an end-to-end autonomous procurement suite, focusing on:
 This application was engineered with a focus on **Zero-Hardcoding Methodology**, **Actionable Financial Impact**, and **Autonomous Closed-Loop Execution** to transform raw data into immediate procurement leverage.
 
 ---
-*Developed as a Strategic AI Proof of Concept for Intelligent Supply Chain Automation.*
