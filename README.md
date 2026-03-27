@@ -11,7 +11,6 @@ This platform provides an end-to-end autonomous procurement suite, focusing on:
 
 ## 🌐 Deployment Options
 - **Streamlit Cloud (Live)**: [AI Inventory Intelligence Dashboard](https://ai-inventory-intelligence-bmpheamcguvbd8fg7obqh2.streamlit.app)
-- **Google Colab (Interactive Demo)**: Open the provided [AI_Inventory_Intelligence_Demo.ipynb](https://colab.research.google.com/github/lmudu2/ai-inventory-intelligence/blob/main/AI_Inventory_Intelligence_Demo.ipynb) directly in Google Colab to run the full dashboard & backend API in the cloud without installing anything locally.
 
 ## 🏗️ Architecture
 - **Frontend**: Streamlit-based AI-first dashboard featuring premium glassmorphism aesthetics, dynamic metric visualizers, and an intuitive dual-view workflow (Global Market vs. Product Focus).
