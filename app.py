@@ -575,7 +575,7 @@ else:
                             mapped_cat = state.get("mapped_categories", {}).get(pid, curr_prod['category'])
                             
                             if match_type == "Exact":
-                                st.write(f"I have scanned the global network and identified the **Top {len(suppliers)} Suppliers** natively matching the **{curr_prod['category']}** category.")
+                                st.write(f"The AI has identified the **Top {len(suppliers)} Suppliers** from the global network for the **{curr_prod['category']}** category.")
                             else:
                                 st.info(f"**AI Semantic Bridge:** The strict category '{curr_prod['category']}' was mapped dynamically to: **'{mapped_cat}'**.")
                                 st.write(f"I have identified the **Top {len(suppliers)} Alternative Suppliers** capable of sourcing this product based on Risk and Price.")
