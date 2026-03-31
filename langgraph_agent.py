@@ -67,25 +67,52 @@ class SupplyChainState(TypedDict):
 
 # --- Core Business Logic (now as Tools) ---
 class AgentDataModule:
-    def __init__(self, data_dir=DATA_DIR):
-        self.products_df = pd.read_csv(os.path.join(data_dir, "products_50k.csv"))
-        self.sales_df = pd.read_csv(os.path.join(data_dir, "sales_dense.csv"))
-        self.risk_df = pd.read_csv(os.path.join(data_dir, "supply_chain_risk_analysis.csv"))
-        
-        # Standardize IDs
-        def format_sku(val):
-            val_str = str(val).strip()
-            if val_str.isdigit(): return f"SKU-{int(val_str):06d}"
-            return val_str
+    _instance = None
 
-        if 'sku' in self.sales_df.columns: self.sales_df = self.sales_df.rename(columns={'sku': 'product_id'})
-        if 'sku' in self.products_df.columns: self.products_df = self.products_df.rename(columns={'sku': 'product_id'})
+    def __getnewargs__(self):
+        return (self.data_dir,)
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(AgentDataModule, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
+    def __init__(self, data_dir=DATA_DIR):
+        if self._initialized: return
+        self.data_dir = data_dir
+        self.products_df = None
+        self.sales_df = None
+        self.risk_df = None
+        self._initialized = True
+
+    def load_data(self):
+        """Lazy-loads and optimizes data if not already present."""
+        if self.products_df is not None: return
         
-        self.sales_df['product_id'] = self.sales_df['product_id'].apply(format_sku)
-        self.products_df['product_id'] = self.products_df['product_id'].apply(format_sku)
+        import os
+        print("DEBUG: Initializing AgentDataModule (loading 60MB+ datasets)...")
+        self.products_df = pd.read_csv(os.path.join(self.data_dir, "products_50k.csv"))
+        self.sales_df = pd.read_csv(os.path.join(self.data_dir, "sales_dense.csv"))
+        self.risk_df = pd.read_csv(os.path.join(self.data_dir, "supply_chain_risk_analysis.csv"))
+        
+        # Vectorized Standardized IDs (much faster than .apply)
+        for df in [self.sales_df, self.products_df]:
+            if 'sku' in df.columns:
+                df.rename(columns={'sku': 'product_id'}, inplace=True)
+            
+            # Convert to numeric first, handling non-digits as NaN
+            temp_ids = pd.to_numeric(df['product_id'], errors='coerce')
+            # Fill SKU pattern using vectorized string operations
+            df['product_id'] = np.where(
+                temp_ids.notna(),
+                "SKU-" + temp_ids.fillna(0).astype(int).astype(str).str.zfill(6),
+                df['product_id'].astype(str).str.strip()
+            )
 
     def get_global_stats(self):
-        """Returns high-level statistics about the loaded datasets."""
+        """Returns high-level statistics."""
+        self.load_data()
         return {
             "total_sales_records": len(self.sales_df),
             "total_skus": len(self.products_df),
@@ -129,6 +156,7 @@ _llm_bridge_cache = {}
 
 def get_matching_suppliers(category: str, product_name: str) -> tuple[pd.DataFrame, str, str]:
     """Finds suppliers by category, falling back to keywords, then to an LLM semantic bridge."""
+    data_module.load_data()
     if product_name in _llm_bridge_cache:
         return _llm_bridge_cache[product_name]
         
@@ -165,6 +193,7 @@ def get_matching_suppliers(category: str, product_name: str) -> tuple[pd.DataFra
 @tool
 def get_high_demand_products(threshold: int = 150):
     """Identifies products with high demand based on historical sales data."""
+    data_module.load_data()
     demand = data_module.sales_df.groupby('product_id')['quantity_sold'].sum().reset_index()
     high_demand = demand[demand['quantity_sold'] > threshold]
     # Include ML features for downstream intelligence
@@ -176,6 +205,7 @@ def get_high_demand_products(threshold: int = 150):
 @tool
 def get_low_demand_products(max_sales: int = 50):
     """Identifies slow-moving products (low demand) to assess overstock risk."""
+    data_module.load_data()
     demand = data_module.sales_df.groupby('product_id')['quantity_sold'].sum().reset_index()
     # Find products with low sales
     low_demand = demand[demand['quantity_sold'] <= max_sales]
@@ -331,6 +361,7 @@ def get_market_news(category: str, product_name: str = ""):
 @tool
 def research_suppliers(category: str, product_name: str, product_id: str = None):
     """Researches suppliers for a category and evaluates their risk scores."""
+    data_module.load_data()
     # Find suppliers that handle this category/product type
     suppliers, _, _ = get_matching_suppliers(category, product_name)
     if suppliers.empty:

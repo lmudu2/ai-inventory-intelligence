@@ -88,6 +88,15 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+@st.cache_resource
+def get_cached_data_module():
+    """Ensures the heavy supply chain datasets are loaded only once and shared across the session."""
+    data_module.load_data()
+    return data_module
+
+# Initialize the optimized data layer
+_dm = get_cached_data_module()
+
 # --- Custom CSS for Premium Light Mode ---
 st.markdown("""
     <style>
