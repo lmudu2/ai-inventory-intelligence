@@ -100,14 +100,14 @@ _dm = get_cached_data_module()
 # --- Custom CSS for Premium Light Mode ---
 st.markdown("""
     <style>
-    /* Premium Font Stack & Colab-Safe Reset */
+    /* Super-Resilient Premium Font Stack */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
     
     html, body, [data-testid="stAppViewContainer"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         background-color: #f8fafc;
         color: #1e293b;
-        max-width: 100vw;
+        width: 100% !important;
         overflow-x: hidden;
     }
 
@@ -116,29 +116,22 @@ st.markdown("""
         display: none;
     }
 
-    /* Glassmorphism Cards: Refined for Colab rendering */
+    /* Glassmorphism Cards: Fluid & Safe */
     div[data-testid="stVerticalBlockBordered"] {
-        background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(8px) saturate(150%) !important;
-        -webkit-backdrop-filter: blur(8px) saturate(150%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        border: 1px solid #e2e8f0 !important;
         border-radius: 20px !important;
-        padding: 2rem !important;
-        margin-bottom: 1.5rem !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+        transition: transform 0.3s ease !important;
     }
     
     div[data-testid="stVerticalBlockBordered"]:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
-        border-color: rgba(99, 102, 241, 0.3) !important;
-    }
-    
-    /* Resilient Spacing: Fix for Colab overlapping elements */
-    [data-testid="stVerticalBlock"] > div {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
     }
 
     /* Premium Headers */
@@ -146,7 +139,6 @@ st.markdown("""
         color: #0f172a !important;
         font-weight: 800 !important;
         letter-spacing: -0.04em !important;
-        line-height: 1.2 !important;
     }
     
     .gradient-text {
@@ -154,66 +146,40 @@ st.markdown("""
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         font-weight: 800;
-        font-size: clamp(2rem, 5vw, 4rem) !important;
-        margin-bottom: 0px;
-        line-height: normal;
+        font-size: clamp(1.8rem, 4vw, 3.5rem) !important;
+        margin-bottom: 0.5rem;
     }
 
-    /* Button Refinements */
+    /* Fluid Buttons */
     .stButton>button {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
         color: white !important;
         border: none !important;
-        border-radius: 16px !important;
-        padding: 0.75rem 2.5rem !important;
+        border-radius: 14px !important;
+        padding: 0.6rem 2rem !important;
         font-weight: 700 !important;
-        transition: all 0.3s ease !important;
         width: 100%;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25) !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important;
     }
     
-    .stButton>button:hover {
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35) !important;
-        transform: scale(1.01);
-        filter: brightness(1.1);
-    }
-    
-    .stButton>button:disabled {
-        background: #f1f5f9 !important;
-        color: #94a3b8 !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    /* Metric & Data Visualization */
+    /* Metrics */
     [data-testid="stMetricLabel"] {
         color: #64748b !important;
-        font-weight: 600 !important;
-        font-size: 0.8rem !important;
+        font-weight: 650 !important;
+        font-size: 0.75rem !important;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
     [data-testid="stMetricValue"] {
         color: #4f46e5 !important;
         font-weight: 800 !important;
-        font-size: 2rem !important;
     }
     
-    /* Better Expanders for Colab */
+    /* Clean Expanders */
     .stExpander {
-        border: 1px solid #e2e8f0 !important;
+        border: 1px solid #f1f5f9 !important;
         background: #ffffff !important;
-        border-radius: 14px !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-    }
-
-    /* Animation: Entrance Reveal */
-    @keyframes entranceFade {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .stApp {
-        animation: entranceFade 0.6s ease-out;
+        border-radius: 12px !important;
     }
 
     </style>
