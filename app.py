@@ -98,7 +98,7 @@ def get_cached_data_module():
 _dm = get_cached_data_module()
 
 # --- Custom CSS for Premium Light Mode ---
-st.markdown("""
+st.html("""
     <style>
     /* Super-Resilient Premium Font Stack */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
@@ -183,7 +183,7 @@ st.markdown("""
     }
 
     </style>
-    """, unsafe_allow_html=True)
+    """)
 
 # --- Initialize Session State ---
 if "agent_state" not in st.session_state or not isinstance(st.session_state.agent_state.get("forecasted_demand"), dict):
@@ -225,13 +225,13 @@ if low_demand is not None:
 
 
 # --- Header Section ---
-st.markdown('<h1 class="gradient-text">Intelligent Supplier Replenishment & Orchestration</h1>', unsafe_allow_html=True)
-st.markdown('<div style="margin-top: 10px;"></div>', unsafe_allow_html=True)
+st.html('<h1 class="gradient-text">Intelligent Supplier Replenishment & Orchestration</h1>')
+st.html('<div style="margin-top: 10px;"></div>')
 
 
 
 if not is_audited and not is_focused:
-    st.markdown('<div style="margin-top: 50px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 50px;"></div>')
     
     # --- Methodology Section (Initial Stage) ---
     with st.expander("Explore the Autonomous Intelligence Engine (How it Works)"):
@@ -250,7 +250,7 @@ if not is_audited and not is_focused:
                 st.write(state['methodology_guides']['supplier_guide'])
                 st.caption("**Focus**: Global Risk Mapping, Dynamic Discounting, & Lead Time Adjusted Replenishment.")
 
-    st.markdown('<div style="margin-top: 30px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 30px;"></div>')
     with st.container(border=True):
         st.markdown("### Demand Forecasting")
         st.write("The Procurement Agent is standing by to analyze your **50,000 SKU catalog**. Click the button below to trigger a full-catalog audit for replenishment and overstock priorities.")
@@ -309,7 +309,7 @@ else:
 reliability = state.get("global_safety_score", 0.0)
 # --- AI Insight Strip (Focused View) ---
 if is_focused:
-    st.markdown('<div style="margin-top: 25px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 25px;"></div>')
     i1, i2, i3 = st.columns(3)
     with i1:
         with st.container(border=True):
@@ -408,7 +408,7 @@ if not is_focused:
                 with st.spinner(f"Agent {spinner_text} for {len(selected_skus)} items..."):
                     st.session_state.agent_state = app.invoke(state)
                     st.rerun()
-    st.markdown('<div style="margin-top: 30px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 30px;"></div>')
     
     st.markdown("### Risk & Market Analysis")
     
@@ -418,7 +418,7 @@ if not is_focused:
         st.markdown("#### Audit Summary")
         st.write(audit_summary)
 
-    st.markdown('<div style="margin-top: 25px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 25px;"></div>')
     
     # Inventory View Selection (Radio for reactivity)
     inv_view = st.radio(
@@ -444,7 +444,7 @@ if not is_focused:
     m4.metric("Supplier Safety", f"{reliability:.1f}%", "Weighted Avg", delta_color="off")
     m5.metric("Discount Potential", f"{discount_pot:.1f}%", "Market Avg", delta_color="off")
 
-    st.markdown('<div style="margin-top: 20px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 20px;"></div>')
     
     
     if is_high_view:
@@ -496,7 +496,7 @@ else:
     if not valid_products:
         st.stop()
         
-    st.markdown('<div style="margin-top: 20px;"></div>', unsafe_allow_html=True)
+    st.html('<div style="margin-top: 20px;"></div>')
     
     # Render Streamlit Multi-Tabs
     tabs = st.tabs(tab_names)
@@ -631,10 +631,10 @@ else:
                         else:
                             st.markdown(final_proposal)
     
-            st.markdown('<div style="margin-top: 40px;"></div>', unsafe_allow_html=True)
+            st.html('<div style="margin-top: 40px;"></div>')
 
 # --- Global Footer ---
-st.markdown('<div style="margin-top: 60px;"></div>', unsafe_allow_html=True)
+st.html('<div style="margin-top: 60px;"></div>')
 st.markdown("---")
 _, col_footer, _ = st.columns([4, 1, 4])
 with col_footer:
