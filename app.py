@@ -91,13 +91,15 @@ st.set_page_config(
 # --- Custom CSS for Premium Light Mode ---
 st.markdown("""
     <style>
-    /* Main Background & Font */
+    /* Premium Font Stack & Colab-Safe Reset */
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
     
     html, body, [data-testid="stAppViewContainer"] {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         background-color: #f8fafc;
         color: #1e293b;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
     /* Remove Sidebar */
@@ -105,67 +107,66 @@ st.markdown("""
         display: none;
     }
 
-    /* Glassmorphism Light Cards */
-    /* Glassmorphism Light Cards (Targeting Streamlit's Bordered Container) */
-    [data-testid="stVerticalBlockBordered"] {
+    /* Glassmorphism Cards: Refined for Colab rendering */
+    div[data-testid="stVerticalBlockBordered"] {
         background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(8px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(8px) saturate(150%) !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important;
         border-radius: 20px !important;
-        padding: 25px !important;
-        margin-bottom: 20px !important;
+        padding: 2rem !important;
+        margin-bottom: 1.5rem !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
-        transition: all 0.3s ease !important;
-    }
-    [data-testid="stVerticalBlockBordered"]:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
-    /* Remove default Streamlit spacing/bars */
-    hr {
-        display: none !important;
+    div[data-testid="stVerticalBlockBordered"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(99, 102, 241, 0.3) !important;
     }
+    
+    /* Resilient Spacing: Fix for Colab overlapping elements */
     [data-testid="stVerticalBlock"] > div {
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
-    }
-    .stCard:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
     }
 
-    /* Headers & Text */
+    /* Premium Headers */
     h1, h2, h3 {
         color: #0f172a !important;
         font-weight: 800 !important;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.04em !important;
+        line-height: 1.2 !important;
     }
+    
     .gradient-text {
         background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
         font-weight: 800;
-        font-size: 3.5rem;
+        font-size: clamp(2rem, 5vw, 4rem) !important;
         margin-bottom: 0px;
+        line-height: normal;
     }
 
-    /* Buttons */
+    /* Button Refinements */
     .stButton>button {
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        color: white;
-        border: none;
-        border-radius: 16px;
-        padding: 0.8rem 2.5rem;
-        font-weight: 600;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 16px !important;
+        padding: 0.75rem 2.5rem !important;
+        font-weight: 700 !important;
+        transition: all 0.3s ease !important;
         width: 100%;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25) !important;
     }
+    
     .stButton>button:hover {
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35) !important;
+        transform: scale(1.01);
+        filter: brightness(1.1);
     }
     
     .stButton>button:disabled {
@@ -173,33 +174,37 @@ st.markdown("""
         color: #94a3b8 !important;
         box-shadow: none !important;
         transform: none !important;
-        cursor: not-allowed !important;
     }
 
-    /* Reset Button (Secondary) */
-    .reset-btn button {
-        background: white !important;
-        color: #ef4444 !important;
-        border: 1px solid #fee2e2 !important;
-        box-shadow: none !important;
-    }
-
-    /* Metrics */
+    /* Metric & Data Visualization */
     [data-testid="stMetricLabel"] {
-        color: #1e293b !important;
-        font-weight: 900 !important;
-        font-size: 0.9rem !important;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        font-size: 0.8rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
     [data-testid="stMetricValue"] {
         color: #4f46e5 !important;
         font-weight: 800 !important;
+        font-size: 2rem !important;
     }
     
-    /* Expander Styling */
+    /* Better Expanders for Colab */
     .stExpander {
-        border: none !important;
-        background: rgba(0,0,0,0.02) !important;
-        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff !important;
+        border-radius: 14px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+
+    /* Animation: Entrance Reveal */
+    @keyframes entranceFade {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .stApp {
+        animation: entranceFade 0.6s ease-out;
     }
 
     </style>
